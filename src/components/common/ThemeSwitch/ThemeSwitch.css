@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components{
+  .modeSwitch{
+    @apply
+    flex
+    items-center
+    justify-center
+    gap-2
+    text-xl
+  }
+  .darkIconActive{
+    @apply
+    text-orange-500
+  }
+}
