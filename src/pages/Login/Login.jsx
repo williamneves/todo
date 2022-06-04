@@ -15,7 +15,7 @@ const Login = () => {
 			<div className='loginBox'>
 				<div className='flex justify-between h-full w-full'>
 					<div className='hidden md:block w-2/5 p-5 self-center'>
-						<img src={'assets/login.svg'} className='scale-150' />
+						<img src={'assets/login.svg'} className='scale-150' alt='Login Image Hero' />
 					</div>
 					<div className='flex w-full md:w-3/5 items-center justify-center'>
 						<div className='flex flex-col w-full items-center p-5 gap-4 justify-center'>
