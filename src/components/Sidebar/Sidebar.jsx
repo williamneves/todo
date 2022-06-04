@@ -59,7 +59,7 @@ const Sidebar = () => {
 							to='/'
 							className='items-center justify-center gap-3 mx-6 mt-3 flex text-2xl font-extrabold tracking-tight border-b pb-3 border-gray-300 dark:border-stone-600'>
 							<SiTodoist className='text-orange-600' />
-							<span className='font-bold dark:text-stone-200'>Todoist</span>
+							<span className='font-bold dark:text-stone-200'>Todo-it!</span>
 						</Link>
 						<NavLink to='/todos' className={'navLinks'}>
 							<BsUiChecks />
