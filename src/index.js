@@ -5,6 +5,7 @@ import App from './App';
 import 'flowbite';
 import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
+import { Toaster } from 'react-hot-toast';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -12,6 +13,7 @@ root.render(
 		<RecoilRoot>
 			<BrowserRouter>
 				<App />
+				<Toaster />
 			</BrowserRouter>
 		</RecoilRoot>
 	</React.StrictMode>

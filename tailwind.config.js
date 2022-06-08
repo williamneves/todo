@@ -27,6 +27,9 @@ module.exports = {
 				'light': '#eceeec',
 				'dark': '#1e2b37',
 			},
+			scale: {
+				'350': '3.5',
+			}
 		},
 	},
 	plugins: [require('flowbite/plugin')],

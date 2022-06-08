@@ -1,11 +1,11 @@
 import React from 'react'
 
-const InputFloater = ({name, value, handleChange,label, elementClass, type, disabled}) => {
+const InputFloaterRegister = ({name, value, handleChange,label, elementClass, type, disabled}) => {
   return (
     <div className={`relative ${elementClass}`}>
       <input
         type={type}
-        className="block rounded-t-lg rounded-b-lg focus:rounded-b-none px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 
+        className="block rounded-t-lg rounded-b-lg focus:rounded-b-none px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900
         bg-gray-50 hover:bg-gray-100
         dark:bg-gray-700 border-0 border-b-2 
         border-gray-300 appearance-none dark:text-white dark:border-gray-600 
@@ -27,4 +27,4 @@ const InputFloater = ({name, value, handleChange,label, elementClass, type, disa
   )
 }
 
-export default InputFloater
+export default InputFloaterRegister

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import {logout} from "../../lib/firebase";
 import './Sidebar.css';
 import { menuStateAtom, screenSizeAtom } from '../../atoms/themeAtom';
 import { useRecoilState } from 'recoil';
@@ -51,15 +52,15 @@ const Sidebar = () => {
 	return (
 		<aside aria-label='Sidebar'>
 			<div
-				className={`${menuState ? 'sidebarOpen' : 'sidebarClosed'} hideTranstion`}
+				className={`${menuState ? 'sidebarOpen' : 'sidebarClosed'} sidebar hideTransition`}
 				ref={sidebarRef}>
 				{menuState && <div className='flex flex-col justify-between h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-5'>
 					<div className='flex flex-col justify-start gap-3'>
 						<Link
 							to='/'
-							className='items-center justify-center gap-3 mx-6 mt-3 flex text-2xl font-extrabold tracking-tight border-b pb-3 border-gray-300 dark:border-stone-600'>
+							className='logoLink'>
 							<SiTodoist className='text-orange-600' />
-							<span className='font-bold dark:text-stone-200'>Todo-it!</span>
+							<span className='font-bold text-primary dark:text-light'>Todo-it!</span>
 						</Link>
 						<NavLink to='/todos' className={'navLinks'}>
 							<BsUiChecks />
@@ -70,14 +71,14 @@ const Sidebar = () => {
 							<span className=''>Acount</span>
 						</NavLink>
 					</div>
-					<div className="flex flex-col justify-start gap-3">
-						<span className={'navLinks cursor-pointer'} onClick={() => {}}>
+					<div className="logoutArea">
+						<span className={'navLinks cursor-pointer mt-3 justify-center'} onClick={logout}>
 							<HiOutlineLogout className='text-xl' />
 							<span className=''>Logout</span>
 						</span>
-						<div className="mx-3 px-3 border-t border-gray-300 dark:border-stone-600 pt-5">
-							<ThemeSwitch />
-						</div>
+						{screenSize <= 768 && <div className="themeSwitch">
+							<ThemeSwitch/>
+						</div>}
 					</div>
 				</div>}
 			</div>

@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components{
+    .inputFloater {
+        @apply
+        block
+        rounded-t-lg
+        rounded-b-lg
+        focus:rounded-b-none
+        px-2.5 pb-2.5
+        pt-5 w-full
+        text-sm
+        text-gray-900
+        dark:bg-gray-700
+        border-0
+        border-b-2
+        appearance-none
+        transition-all
+        duration-200
+        ease-in-out
+        !important
+    }
+    .validFalse {
+        @apply
+        bg-red-50
+        hover:bg-red-100
+        border-red-500
+        focus:border-red-600
+        focus:ring-red-600
+        !important
+    }
+    .validTrue {
+        @apply
+        bg-gray-50
+        hover:bg-gray-100
+        border-gray-300
+        appearance-none
+        focus:border-blue-800
+        !important
+    }
+    .labelLogin {
+        @apply
+        absolute
+        text-sm
+        font-semibold
+        text-gray-500
+        duration-300
+        transform
+        -translate-y-4
+        scale-75
+        top-4 z-10
+        origin-[0]
+        left-2.5
+        peer-focus:text-blue-800
+        peer-focus:dark:text-blue-500
+        peer-placeholder-shown:scale-100
+        peer-placeholder-shown:translate-y-0
+        peer-focus:scale-75
+        peer-focus:-translate-y-4
+        !important
+    }
+}
