@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components{
+@layer components {
     .inputFloater {
         @apply
         block
@@ -20,8 +20,13 @@
         transition-all
         duration-200
         ease-in-out
+        disabled:cursor-wait
+        disabled:bg-gray-200
+        disabled:text-gray-600
+        disabled:hover:bg-gray-200  
         !important
     }
+
     .validFalse {
         @apply
         bg-red-50
@@ -31,6 +36,7 @@
         focus:ring-red-600
         !important
     }
+
     .validTrue {
         @apply
         bg-gray-50
@@ -40,6 +46,7 @@
         focus:border-blue-800
         !important
     }
+
     .labelLogin {
         @apply
         absolute
@@ -59,6 +66,7 @@
         peer-placeholder-shown:translate-y-0
         peer-focus:scale-75
         peer-focus:-translate-y-4
+        peer-disabled:cursor-wait
         !important
     }
 }

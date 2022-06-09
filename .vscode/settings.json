@@ -1,0 +1,5 @@
+{
+  "prettier.jsxSingleQuote": true,
+  "reactSnippets.settings.prettierEnabled": true,
+  "prettier.useTabs": true
+}

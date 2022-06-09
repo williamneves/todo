@@ -1,89 +1,103 @@
-import React, { useEffect, useRef } from 'react';
-import {logout} from "../../lib/firebase";
-import './Sidebar.css';
-import { menuStateAtom, screenSizeAtom } from '../../atoms/themeAtom';
-import { useRecoilState } from 'recoil';
-import { SiTodoist } from 'react-icons/si';
-import { BsUiChecks } from 'react-icons/bs';
-import { RiUserSettingsLine } from 'react-icons/ri';
-import { HiOutlineLogout } from 'react-icons/hi';
-import { NavLink, Link } from 'react-router-dom';
-import ThemeSwitch from './../common/ThemeSwitch/ThemeSwitch';
+import React, { useEffect, useRef } from "react";
+import { logout } from "../../lib/firebase";
+import "./Sidebar.css";
+import { menuStateAtom, screenSizeAtom } from "../../atoms/themeAtom";
+import { useRecoilState } from "recoil";
+import { SiTodoist } from "react-icons/si";
+import { BsUiChecks } from "react-icons/bs";
+import { RiUserSettingsLine } from "react-icons/ri";
+import { HiOutlineLogout } from "react-icons/hi";
+import { NavLink, Link } from "react-router-dom";
+import ThemeSwitch from "./../common/ThemeSwitch/ThemeSwitch";
 
 const Sidebar = () => {
-	const [menuState, setMenuState] = useRecoilState(menuStateAtom);
-	const [screenSize, setScreenSize] = useRecoilState(screenSizeAtom);
+  const [menuState, setMenuState] = useRecoilState(menuStateAtom);
+  const [screenSize, setScreenSize] = useRecoilState(screenSizeAtom);
 
-	// set ref to the sidebar container
-	const sidebarRef = useRef();
+  // set ref to the sidebar container
+  const sidebarRef = useRef();
 
-	// Capture the screen size and set the state
-	useEffect(() => {
-		const handleResize = () => setScreenSize(window.innerWidth);
-		window.addEventListener('resize', handleResize);
+  // Capture the screen size and set the state
+  useEffect(() => {
+    const handleResize = () => setScreenSize(window.innerWidth);
+    window.addEventListener("resize", handleResize);
 
-		handleResize();
+    handleResize();
 
-		return () => window.removeEventListener('resize', handleResize);
-	}, []);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-	// Toggle the menu state if the screen size is less than 768px
-	useEffect(() => {
-		if (screenSize < 768) {
-			setMenuState(false);
-		} else setMenuState(true);
-	}, [screenSize]);
+  // Toggle the menu state if the screen size is less than 768px
+  useEffect(() => {
+    if (screenSize < 768) {
+      setMenuState(false);
+    } else setMenuState(true);
+  }, [screenSize]);
 
-	// Close the menu if the user clicks outside of the menu
-	useEffect(() => {
-		// If the menu is open and screen is less than 768 width, close it if the user clicks outside of it
-		const handleClick = (e) => {
-			if (menuState && !sidebarRef.current.contains(e.target) && screenSize < 768) {
-				setMenuState(false);
-			}
-		};
-		// Add the event listener
-		document.addEventListener('mousedown', handleClick);
+  // Close the menu if the user clicks outside of the menu
+  useEffect(() => {
+    // If the menu is open and screen is less than 768 width, close it if the user clicks outside of it
+    const handleClick = (e) => {
+      if (
+        menuState &&
+        !sidebarRef.current.contains(e.target) &&
+        screenSize < 768
+      ) {
+        setMenuState(false);
+      }
+    };
+    // Add the event listener
+    document.addEventListener("mousedown", handleClick);
 
-		// Remove the event listener on cleanup
-		return () => document.removeEventListener('mousedown', handleClick);
-	}, [menuState, screenSize]);
+    // Remove the event listener on cleanup
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [menuState, screenSize]);
 
-	return (
-		<aside aria-label='Sidebar'>
-			<div
-				className={`${menuState ? 'sidebarOpen' : 'sidebarClosed'} sidebar hideTransition`}
-				ref={sidebarRef}>
-				{menuState && <div className='flex flex-col justify-between h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-5'>
-					<div className='flex flex-col justify-start gap-3'>
-						<Link
-							to='/'
-							className='logoLink'>
-							<SiTodoist className='text-orange-600' />
-							<span className='font-bold text-primary dark:text-light'>Todo-it!</span>
-						</Link>
-						<NavLink to='/todos' className={'navLinks'}>
-							<BsUiChecks />
-							<span className=''>To-Dos</span>
-						</NavLink>
-						<NavLink to='/user' className={'navLinks'}>
-							<RiUserSettingsLine className='text-xl' />
-							<span className=''>Acount</span>
-						</NavLink>
-					</div>
-					<div className="logoutArea">
-						<span className={'navLinks cursor-pointer mt-3 justify-center'} onClick={logout}>
-							<HiOutlineLogout className='text-xl' />
-							<span className=''>Logout</span>
-						</span>
-						{screenSize <= 768 && <div className="themeSwitch">
-							<ThemeSwitch/>
-						</div>}
-					</div>
-				</div>}
-			</div>
-		</aside>
-	);
+  return (
+    <aside aria-label="Sidebar">
+      <div
+        className={`${
+          menuState ? "sidebarOpen" : "sidebarClosed"
+        } sidebar hideTransition`}
+        ref={sidebarRef}
+      >
+        {menuState && (
+          <div className="flex flex-col justify-between h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-5">
+            <div className="flex flex-col justify-start gap-3">
+              <Link to="/" className="logoLink">
+                <SiTodoist className="text-orange-600" />
+                <span className="font-bold text-primary dark:text-light">
+                  Todo-it!
+                </span>
+              </Link>
+              <NavLink to="/todos" className={"navLinks"}>
+                <BsUiChecks />
+                <span className="">To-Dos</span>
+              </NavLink>
+              <NavLink to="/user" className={"navLinks"}>
+                <RiUserSettingsLine className="text-xl" />
+                <span className="">Acount</span>
+              </NavLink>
+            </div>
+            <div className="logoutArea">
+              <span
+                className={"navLinks cursor-pointer mt-3 justify-center"}
+                onClick={logout}
+              >
+                <HiOutlineLogout className="text-xl" />
+                <span className="">Logout</span>
+              </span>
+              {screenSize <= 768 && (
+                <div className="themeSwitch">
+                  <ThemeSwitch />
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    </aside>
+  );
 };
 
 export default Sidebar;
