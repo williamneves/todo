@@ -8,28 +8,29 @@ const ProtectedRoute = ({ children }) => {
   const [user, loading, error] = useAuthState(auth);
 
   // If fakeAuth is true, redirect to login page
-  if (loading) {
-    return (
-      <div
-        className={
-          "h-screen w-screen flex flex-col gap-5 justify-center items-center align-middle bg-gray-300-100"
-        }
-      >
-        <BallTriangle
-          height="150"
-          width="150"
-          color="orange"
-          ariaLabel="loading-indicator"
-        />
-        <code className={"text-xl text-gray-600 italic "}>Loading...</code>
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div
+  //       className={
+  //         "h-screen w-screen flex flex-col gap-5 justify-center items-center align-middle bg-gray-300-100"
+  //       }
+  //     >
+  //       <BallTriangle
+  //         height="150"
+  //         width="150"
+  //         color="orange"
+  //         ariaLabel="loading-indicator"
+  //       />
+  //       <code className={"text-xl text-gray-600 italic "}>Loading...</code>
+  //     </div>
+  //   );
+  // }
 
   // Is loading and no User founded
-  if (!loading && !user) {
-    return <Navigate to="/login" replace />;
-  } else return children;
+  // if (!loading && !user) {
+    // return <Navigate to="/login" replace />;
+  // } else return children;
+  return children;
 };
 
 export default ProtectedRoute;

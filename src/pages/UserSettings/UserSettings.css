@@ -3,7 +3,60 @@
 @tailwind utilities;
 
 @layer components {
-  .example {
-    @apply block;
+  .userSettings {
+    @apply
+    flex
+    justify-between
+    mx-5
+    mt-14
+    md:mt-8
+    bg-white
+    dark:bg-secondary-dark-bg/50
+    w-full
+    max-w-3xl
+    rounded-lg
+    p-5
+    drop-shadow-md
+  }
+  .profileContainer{
+    @apply
+    rounded-full
+    h-40
+    w-40
+    flex
+    relative
+    cursor-pointer
+    overflow-hidden
+    drop-shadow-md
+    
+  }
+  .profilePhoto {
+    @apply
+    group-hover:blur-sm
+    transition-all
+    duration-300
+    ease-out
+  }
+  .overlapProfileIcon {
+    @apply
+    absolute
+    top-0
+    left-0
+    h-40
+    w-40
+    z-10
+    flex
+    items-center
+    justify-center
+    bg-main-dark-bg
+    opacity-0 
+    hover:opacity-70 
+    text-white 
+    text-4xl
+    peer-hover:shadow-lg
+    transition-all
+    duration-300
+    ease-out
+    
   }
 }
