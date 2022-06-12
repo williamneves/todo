@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Outlet, Navigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
-import { menuStateAtom } from "./atoms/themeAtom";
 import { Sidebar, Navbar } from "./components";
 import { appContext } from "./lib/context";
 

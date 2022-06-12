@@ -1,5 +1,4 @@
 import React, { useState, createContext } from "react";
-import { menuStateAtom, screenSizeAtom, themeAtom } from "../atoms/themeAtom";
 
 const appContext = createContext();
 
@@ -8,7 +7,7 @@ const AppWrapper = ({ children }) => {
   const [userDB, setUserDB] = useState("");
   const [authUser, setAuthUser] = useState("");
   const [menuState, setMenuState] = useState(true);
-  const [screenSize, setScreenSize] = useState(screenSizeAtom);
+  const [screenSize, setScreenSize] = useState("");
   const [theme, setTheme] = useState("light");
 
   // Returns the context object

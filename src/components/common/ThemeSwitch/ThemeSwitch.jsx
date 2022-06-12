@@ -1,15 +1,11 @@
 import React, { useEffect, useContext } from "react";
 import { RiMoonClearLine } from "react-icons/ri";
 import { ImSun } from "react-icons/im";
-// import { themeAtom } from "../../../atoms/themeAtom";
 import Toogle from "./Toogle";
 import "./ThemeSwitch.css";
 import { appContext } from "../../../lib/context";
 
-import { useRecoilState } from "recoil";
-
 const ThemeSwitch = () => {
-  // const [theme, setTheme] = useRecoilState(themeAtom);
   const { theme, setTheme } = useContext(appContext);
 
   const handleDarkModeToggle = () => {
