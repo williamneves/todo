@@ -1,13 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Navbar.css";
 import { RiMenuFoldLine } from "react-icons/ri";
-import { useRecoilState } from "recoil";
-import { menuStateAtom, screenSizeAtom } from "../../atoms/themeAtom";
 import ThemeSwitch from "../common/ThemeSwitch/ThemeSwitch";
+import { appContext } from "../../lib/context";
 
 const Navbar = () => {
-  const [menuState, setMenuState] = useRecoilState(menuStateAtom);
-  const [screenSize, setScreenSize] = useRecoilState(screenSizeAtom);
+  const { menuState, setMenuState, screenSize, setScreenSize } =
+    useContext(appContext);
 
   const handleClick = () => {
     setMenuState(!menuState);

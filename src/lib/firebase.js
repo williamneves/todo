@@ -10,6 +10,7 @@ import {
   updateProfile,
   getAdditionalUserInfo,
   deleteUser,
+  onAuthStateChanged,
 } from "firebase/auth";
 import {
   getFirestore,
@@ -56,7 +57,9 @@ const providerFacebook = new FacebookAuthProvider();
 // SignOut
 const logout = () => {
   toast.success("Logout Successful");
-  signOut(auth);
+  signOut(auth).then(() => {
+    console.log("Logout Successful");
+  });
 };
 
 // Firestore Database
@@ -85,4 +88,6 @@ export {
   serverTimestamp,
   collection,
   addDoc,
+  onAuthStateChanged,
+  signOut,
 };

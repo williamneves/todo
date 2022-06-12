@@ -1,20 +1,20 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import 'flowbite';
-import { BrowserRouter } from 'react-router-dom';
-import { RecoilRoot } from 'recoil';
-import { Toaster } from 'react-hot-toast';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import "flowbite";
+import { BrowserRouter } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
+import { AppWrapper } from "./lib/context";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-	<React.StrictMode>
-		<RecoilRoot>
-			<BrowserRouter>
-				<App />
-				<Toaster />
-			</BrowserRouter>
-		</RecoilRoot>
-	</React.StrictMode>
+  <React.StrictMode>
+    <AppWrapper>
+      <BrowserRouter>
+        <App />
+        <Toaster />
+      </BrowserRouter>
+    </AppWrapper>
+  </React.StrictMode>
 );

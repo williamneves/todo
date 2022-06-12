@@ -1,15 +1,12 @@
-@tailwind base;
 @tailwind components;
-@tailwind utilities;
 
-@layer components{
-  .navbar{
-    @apply
-    fixed 
-    md:static 
-    bg-main-bg 
-    dark:bg-main-dark-bg 
-    w-full
-    z-40
+@layer components {
+  .navbar {
+    @apply fixed
+        md:static
+        bg-main-bg
+        dark:bg-main-dark-bg
+        w-full
+        z-40;
   }
 }

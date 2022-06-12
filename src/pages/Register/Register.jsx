@@ -226,7 +226,7 @@ const Register = () => {
         firstName: providerUser.user.displayName.split(" ")[0],
         lastName: providerUser.user.displayName.split(" ")[1],
         email: providerUser.user.email,
-        photoUrl: providerUser.user.photoURL,
+        photoURL: providerUser.user.photoURL,
         createdAt: serverTimestamp(),
       });
 

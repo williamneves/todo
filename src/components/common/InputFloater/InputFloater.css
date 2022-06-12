@@ -1,11 +1,8 @@
-@tailwind base;
 @tailwind components;
-@tailwind utilities;
 
 @layer components {
-    .inputFloater {
-        @apply
-        block
+  .inputFloater {
+    @apply block
         rounded-t-lg
         rounded-b-lg
         focus:rounded-b-none
@@ -23,33 +20,30 @@
         disabled:cursor-wait
         disabled:bg-gray-200
         disabled:text-gray-600
-        disabled:hover:bg-gray-200  
-        !important
-    }
+        disabled:hover:bg-gray-200
+        !important;
+  }
 
-    .validFalse {
-        @apply
-        bg-red-50
+  .validFalse {
+    @apply bg-red-50
         hover:bg-red-100
         border-red-500
         focus:border-red-600
         focus:ring-red-600
-        !important
-    }
+        !important;
+  }
 
-    .validTrue {
-        @apply
-        bg-gray-50
+  .validTrue {
+    @apply bg-gray-50
         hover:bg-gray-100
         border-gray-300
         appearance-none
         focus:border-blue-800
-        !important
-    }
+        !important;
+  }
 
-    .labelLogin {
-        @apply
-        absolute
+  .labelLogin {
+    @apply absolute
         text-sm
         font-semibold
         text-gray-500
@@ -67,6 +61,6 @@
         peer-focus:scale-75
         peer-focus:-translate-y-4
         peer-disabled:cursor-wait
-        !important
-    }
+        !important;
+  }
 }

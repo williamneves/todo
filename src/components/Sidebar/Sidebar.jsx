@@ -1,18 +1,16 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useContext } from "react";
 import { logout } from "../../lib/firebase";
 import "./Sidebar.css";
-import { menuStateAtom, screenSizeAtom } from "../../atoms/themeAtom";
-import { useRecoilState } from "recoil";
 import { SiTodoist } from "react-icons/si";
 import { BsUiChecks } from "react-icons/bs";
 import { RiUserSettingsLine } from "react-icons/ri";
-import { HiOutlineLogout } from "react-icons/hi";
 import { NavLink, Link } from "react-router-dom";
 import ThemeSwitch from "./../common/ThemeSwitch/ThemeSwitch";
+import { appContext } from "../../lib/context";
 
 const Sidebar = () => {
-  const [menuState, setMenuState] = useRecoilState(menuStateAtom);
-  const [screenSize, setScreenSize] = useRecoilState(screenSizeAtom);
+  const { menuState, setMenuState, screenSize, setScreenSize } =
+    useContext(appContext);
 
   // set ref to the sidebar container
   const sidebarRef = useRef();
@@ -81,11 +79,26 @@ const Sidebar = () => {
             </div>
             <div className="logoutArea">
               <span
-                className={"navLinks cursor-pointer mt-3 justify-center items-center"}
+                className={
+                  "navLinks cursor-pointer mt-3 justify-center items-center"
+                }
                 onClick={logout}
               >
                 <span className="">Logout</span>
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1}
+                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                  />
+                </svg>
               </span>
               {screenSize <= 768 && (
                 <div className="themeSwitch">

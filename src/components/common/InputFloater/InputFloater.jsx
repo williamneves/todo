@@ -1,5 +1,5 @@
 import React from "react";
-import "./InputFloater.css";
+// import "./InputFloater.css";
 
 const InputFloater = ({
   name,
@@ -26,7 +26,8 @@ const InputFloater = ({
         required={required}
       />
       <label htmlFor={name} className="labelLogin">
-        {label} {error && <span className="italic text-sm text-red-300">{error}</span>}
+        {label}{" "}
+        {error && <span className="italic text-sm text-red-300">{error}</span>}
       </label>
     </div>
   );
