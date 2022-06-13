@@ -21,8 +21,14 @@ import {
   collection,
   addDoc,
   getDoc,
+  updateDoc,
 } from "firebase/firestore";
-import { getStorage } from "firebase/storage";
+import {
+  getStorage,
+  ref,
+  getDownloadURL,
+  uploadString,
+} from "firebase/storage";
 import toast from "react-hot-toast";
 
 // Your web app's Firebase configuration
@@ -84,10 +90,14 @@ export {
   doc,
   setDoc,
   getDoc,
+  updateDoc,
   Timestamp,
   serverTimestamp,
   collection,
   addDoc,
   onAuthStateChanged,
   signOut,
+  ref,
+  getDownloadURL,
+  uploadString,
 };

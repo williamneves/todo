@@ -1,13 +1,33 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import "./UserSettings.css";
 import InputRounded from "./../../components/common/InputRounded/InputRounded";
-import { db, doc, getDoc, auth, logout, signOut } from "../../lib/firebase";
+import {
+  db,
+  doc,
+  getDoc,
+  addDoc,
+  updateDoc,
+  collection,
+  updateProfile,
+  auth,
+  logout,
+  signOut,
+  ref,
+  getDownloadURL,
+  uploadString,
+} from "../../lib/firebase";
 import { appContext } from "../../lib/context";
+import toast from "react-hot-toast";
 
+// UserSettings component
 const UserSettings = () => {
   //Create states
   const [onEdit, setOnEdit] = useState(true);
+  const [selectedFile, setSelectedFile] = useState(null);
   const { userDB, setUserDB, authUser, setAuthUser } = useContext(appContext);
+
+  // Use ref to store the photoImage file reference
+  const newProfileImage = useRef();
 
   // Handle change of input
   const handleInputChanges = (e) => {
@@ -21,6 +41,39 @@ const UserSettings = () => {
     console.log("submit");
   };
 
+  // Handle the Image Upload
+  const handleImageChange = (e) => {
+    console.log("handleImageChange");
+
+    // Check if the file is an image
+    if (!e.target.files[0].type.includes("image")) {
+      toast.error("Please select an image");
+      return;
+    }
+
+    const reader = new FileReader();
+    if (e.target.files[0]) {
+      reader.readAsDataURL(e.target.files[0]);
+    }
+
+    reader.onload = (readerEvent) => {
+      setSelectedFile(readerEvent.target.result);
+    };
+
+    // Upload the image to firebase
+    const imageRef = ref(`profileImages/${authUser.uid}`);
+
+    uploadString(imageRef, selectedFile, "data_url").then(async (snapshot) => {
+      console.log("snapshot", snapshot);
+      const downloadURL = await getDownloadURL(imageRef);
+      await updateDoc(doc(db, "users", authUser.uid), {
+        photoURL: downloadURL,
+      });
+    });
+    console.log("image uploaded");
+  };
+
+  // Render Component
   return (
     <div className="flex justify-center w-full">
       <div className={"userSettings"}>
@@ -31,13 +84,22 @@ const UserSettings = () => {
             {/* Photo */}
             <div>
               <img
-                src={userDB?.photoURL}
+                src={selectedFile ? selectedFile : userDB?.photoURL}
                 alt="profile"
                 className="profilePhoto"
               />
+              <input
+                ref={newProfileImage}
+                type="file"
+                hidden
+                onChange={handleImageChange}
+              />
             </div>
             {/* overlap background */}
-            <div className="overlapProfileIcon ">
+            <div
+              onClick={() => newProfileImage.current.click()}
+              className="overlapProfileIcon "
+            >
               {/* Icon */}
               <svg
                 className="w-12 h-12"
@@ -61,7 +123,7 @@ const UserSettings = () => {
               </svg>
             </div>
           </div>
-          Actions Buttons
+          {/*Actions Buttons*/}
           <div className="flex flex-col gap-1 w-full py-3 capitalize border-y  px-2 text-xs text-slate-600 dark:text-slate-200">
             <p>{`Last login: ${new Date(
               authUser?.metadata.lastSignInTime
@@ -75,7 +137,7 @@ const UserSettings = () => {
             <p>Total Tasks: 0</p>
             <p>Completed Tasks: 0</p>
           </div>
-          reset password
+          {/*reset password*/}
           <div className="flex flex-col gap-2 w-full">
             <div className="flex flex-col gap-2 w-full">
               <button

@@ -154,6 +154,7 @@ const Register = () => {
       });
 
       await setDoc(doc(db, "users", createdUser.user.uid), {
+        uid: createdUser.user.uid,
         displayName: `${newUser.firstName} ${newUser.lastName}`,
         firstName: newUser.firstName,
         lastName: newUser.lastName,
