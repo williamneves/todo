@@ -1,19 +1,27 @@
 import React, { useEffect, useRef, useContext } from "react";
 import { logout } from "../../lib/firebase";
 import "./Sidebar.css";
-import { SiTodoist } from "react-icons/si";
-import { BsUiChecks } from "react-icons/bs";
-import { RiUserSettingsLine } from "react-icons/ri";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useLocation } from "react-router-dom";
 import ThemeSwitch from "./../common/ThemeSwitch/ThemeSwitch";
 import { appContext } from "../../lib/context";
+import {
+  AdjustmentsIcon,
+  ClipboardIcon,
+  BadgeCheckIcon,
+} from "@heroicons/react/solid";
+import {
+  AdjustmentsIcon as AdjustmentsOutline,
+  ClipboardIcon as ClipboardOutline,
+  BadgeCheckIcon as BadgeCheckOutline,
+} from "@heroicons/react/outline";
 
 const Sidebar = () => {
-  const { menuState, setMenuState, screenSize, setScreenSize } =
+  const { menuState, setMenuState, screenSize, setScreenSize, theme } =
     useContext(appContext);
 
   // set ref to the sidebar container
   const sidebarRef = useRef();
+  const location = useLocation();
 
   // Capture the screen size and set the state
   useEffect(() => {
@@ -21,6 +29,8 @@ const Sidebar = () => {
     window.addEventListener("resize", handleResize);
 
     handleResize();
+
+    console.log(location.pathname);
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -61,20 +71,32 @@ const Sidebar = () => {
       >
         {menuState && (
           <div className="flex flex-col justify-between h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-5">
-            <div className="flex flex-col justify-start gap-3">
+            <div className="flex flex-col justify-start gap-5">
               <Link to="/" className="logoLink">
-                <SiTodoist className="text-orange-600" />
-                <span className="font-bold text-primary dark:text-light">
-                  Todo-it!
+                {theme === "dark" ? (
+                  <BadgeCheckOutline className="w-7 h-7 text-orange-500" />
+                ) : (
+                  <BadgeCheckIcon className="w-7 h-7 text-orange-500" />
+                )}
+                <span className="font-bold text-primary dark:text-light uppercase">
+                  Letsdoit!
                 </span>
               </Link>
               <NavLink to="/todos" className={"navLinks"}>
-                <BsUiChecks />
+                {location.pathname === "/todos" ? (
+                  <ClipboardOutline className="w-5 h-5" />
+                ) : (
+                  <ClipboardIcon className="w-5 h-5" />
+                )}
                 <span className="">To-Dos</span>
               </NavLink>
               <NavLink to="/user" className={"navLinks"}>
-                <RiUserSettingsLine className="text-xl" />
-                <span className="">Acount</span>
+                {location.pathname === "/user" ? (
+                  <AdjustmentsOutline className="w-5 h-5" />
+                ) : (
+                  <AdjustmentsIcon className="w-5 h-5" />
+                )}
+                <span className="">Account</span>
               </NavLink>
             </div>
             <div className="logoutArea">

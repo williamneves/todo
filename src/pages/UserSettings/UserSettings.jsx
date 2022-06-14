@@ -15,24 +15,43 @@ import {
   ref,
   getDownloadURL,
   uploadString,
+  storage,
+  serverTimestamp,
 } from "../../lib/firebase";
 import { appContext } from "../../lib/context";
 import toast from "react-hot-toast";
+import Moment from "react-moment";
+import "moment-timezone";
+import {
+  LogoutIcon,
+  CloudUploadIcon,
+  PencilAltIcon,
+  KeyIcon,
+  CameraIcon,
+} from "@heroicons/react/outline";
 
 // UserSettings component
 const UserSettings = () => {
   //Create states
-  const [onEdit, setOnEdit] = useState(true);
+  const [onEdit, setOnEdit] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const { userDB, setUserDB, authUser, setAuthUser } = useContext(appContext);
+  const [tempUserDB, setTempUserDB] = useState(userDB);
+  const [profileWasUpdated, setProfileWasUpdated] = useState(false);
 
   // Use ref to store the photoImage file reference
   const newProfileImage = useRef();
+  const formRef = useRef();
 
   // Handle change of input
   const handleInputChanges = (e) => {
     const { name, value } = e.target;
     setUserDB({ ...userDB, [name]: value });
+
+    // Compare the tempUserDB with the userDB
+    if (tempUserDB[name] !== value) {
+      setProfileWasUpdated(true);
+    }
   };
 
   // Handle Submit User Edit Info
@@ -42,35 +61,64 @@ const UserSettings = () => {
   };
 
   // Handle the Image Upload
-  const handleImageChange = (e) => {
+  const handleImageChange = async (e) => {
     console.log("handleImageChange");
 
-    // Check if the file is an image
+    const toastId = toast.loading("Checking file...");
+
+    // Check if this file is an image
     if (!e.target.files[0].type.includes("image")) {
       toast.error("Please select an image");
       return;
     }
 
+    toast.loading("Uploading image...", { id: toastId });
     const reader = new FileReader();
     if (e.target.files[0]) {
       reader.readAsDataURL(e.target.files[0]);
     }
 
-    reader.onload = (readerEvent) => {
-      setSelectedFile(readerEvent.target.result);
+    reader.onload = async (readerEvent) => {
+      const imageRef = ref(storage, `profileImages/${authUser.uid}`);
+      await uploadString(imageRef, readerEvent.target.result, "data_url").then(
+        async (snapshot) => {
+          const downloadURL = await getDownloadURL(imageRef);
+          await updateDoc(doc(db, "users", authUser.uid), {
+            photoURL: downloadURL,
+          });
+          setSelectedFile(readerEvent.target.result);
+          toast.success("Image uploaded successfully", { id: toastId });
+          console.log("image uploaded");
+        }
+      );
     };
+  };
 
-    // Upload the image to firebase
-    const imageRef = ref(`profileImages/${authUser.uid}`);
+  // Handle the Update Profile info
+  const handleUpdateProfile = async (e) => {
+    e.preventDefault();
+    setOnEdit(false);
 
-    uploadString(imageRef, selectedFile, "data_url").then(async (snapshot) => {
-      console.log("snapshot", snapshot);
-      const downloadURL = await getDownloadURL(imageRef);
+    // Check if it has any change in the profile
+    if (!profileWasUpdated) {
+      toast("No changes were made");
+      return;
+    }
+
+    const toastId = toast.loading("Updating profile...");
+
+    try {
       await updateDoc(doc(db, "users", authUser.uid), {
-        photoURL: downloadURL,
+        displayName: userDB.displayName,
+        firstName: userDB.firstName,
+        lastName: userDB.lastName,
+        updatedAt: serverTimestamp(),
       });
-    });
-    console.log("image uploaded");
+      toast.success("Profile Updated", { id: toastId });
+    } catch (error) {
+      toast.error(`Error updating profile: ${error}`, { id: toastId });
+      setOnEdit(true);
+    }
   };
 
   // Render Component
@@ -101,33 +149,15 @@ const UserSettings = () => {
               className="overlapProfileIcon "
             >
               {/* Icon */}
-              <svg
-                className="w-12 h-12"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
-                />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
-                />
-              </svg>
+              <CameraIcon className="profileIcon" />
             </div>
           </div>
           {/*Actions Buttons*/}
           <div className="flex flex-col gap-1 w-full py-3 capitalize border-y  px-2 text-xs text-slate-600 dark:text-slate-200">
-            <p>{`Last login: ${new Date(
-              authUser?.metadata.lastSignInTime
-            ).toLocaleDateString()}`}</p>
+            <p>
+              <span>Last login: </span>
+              <Moment fromNow>{authUser?.metadata.lastSignInTime}</Moment>
+            </p>
             <p>
               User since:{" "}
               {`${new Date(
@@ -136,58 +166,54 @@ const UserSettings = () => {
             </p>
             <p>Total Tasks: 0</p>
             <p>Completed Tasks: 0</p>
+            <p>
+              Login with:{" "}
+              {authUser?.providerData[0].providerId.split(".")[0] === "password"
+                ? "Email & Password"
+                : authUser?.providerData[0].providerId.split(".")[0]}
+            </p>
           </div>
           {/*reset password*/}
           <div className="flex flex-col gap-2 w-full">
             <div className="flex flex-col gap-2 w-full">
-              <button
-                type="button"
-                className="transition-all-300 flex items-center justify-center gap-3 btn-dark"
-              >
-                <span>
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                    />
-                  </svg>
-                </span>
-                Reset Password
-              </button>
+              {authUser?.providerData[0].providerId.split(".")[0] ===
+                "password" && (
+                <button
+                  type="button"
+                  className="transition-all-300 flex items-center justify-center gap-3 btn-dark"
+                >
+                  <span>
+                    <KeyIcon className={"w-6 h-6"} />
+                  </span>
+                  Reset Password
+                </button>
+              )}
             </div>
-
             {/* Edit Info */}
             <div className="flex flex-col gap-2 w-full">
-              <button
-                type="button"
-                className="transition-all-300 flex items-center justify-center gap-3 btn-outline-yellow"
-              >
-                <span>
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                    />
-                  </svg>
-                </span>
-                Edit Info
-              </button>
+              {onEdit ? (
+                <button
+                  onClick={handleUpdateProfile}
+                  type="button"
+                  className="transition-all-300 flex items-center justify-center gap-3 btn-outline-yellow"
+                >
+                  <span>
+                    <CloudUploadIcon strokeWidth={1} className="w-6 h-6" />
+                  </span>
+                  Update Info
+                </button>
+              ) : (
+                <button
+                  onClick={() => setOnEdit(!onEdit)}
+                  type="button"
+                  className="transition-all-300 flex items-center justify-center gap-3 btn-outline-yellow"
+                >
+                  <span>
+                    <PencilAltIcon strokeWidth={1} className="w-6 h-6" />
+                  </span>
+                  Edit Info
+                </button>
+              )}
             </div>
             {/* Logout */}
             <div className="flex flex-col gap-2 w-full">
@@ -198,20 +224,7 @@ const UserSettings = () => {
               >
                 Logout
                 <span>
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={1}
-                      d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-                    />
-                  </svg>
+                  <LogoutIcon strokeWidth={1} className="w-6 h-6" />
                 </span>
               </button>
             </div>
@@ -221,7 +234,7 @@ const UserSettings = () => {
         <div className="flex">
           {/* UserInfo */}
 
-          <form onSubmit={handleEditUserInfo}>
+          <form ref={formRef}>
             <div className="grid gap-6 mb-6 lg:grid-cols-2">
               <InputRounded
                 name="displayName"
@@ -246,17 +259,10 @@ const UserSettings = () => {
                 type="email"
                 // extraClassLabel=''
                 // extraClassInput=''
+                styleInput={{ cursor: "no-drop" }}
                 labelText="Email"
                 placeholder={"Email"}
-                required=""
-                disabled=""
-                validate=""
-                readonly={!onEdit}
-                // styleLabel={{'display': 'none'}}
-                // styleInput={{'display': 'none'}}
-                handleFocus={() => console.log("focus")}
-                handleBlur={() => console.log("blur")}
-                handleChange={handleInputChanges}
+                readonly={true}
                 value={userDB?.email}
               />
               <InputRounded
@@ -296,13 +302,6 @@ const UserSettings = () => {
                 value={userDB?.lastName}
               />
             </div>
-
-            <button
-              type="submit"
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
-              Submit
-            </button>
           </form>
 
           {/* User Aditional info */}

@@ -7,7 +7,8 @@ import { appContext } from "../lib/context";
 const ProtectedRoute = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
-  const { userDB, setUserDB, authUser, setAuthUser } = useContext(appContext);
+  const { userDB, setUserDB, authUser, setAuthUser, theme, setTheme } =
+    useContext(appContext);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -21,6 +22,7 @@ const ProtectedRoute = ({ children }) => {
           setAuthUser(user);
           // Set loading to false
           setLoading(false);
+          setTheme("light");
         });
         // ...
       } else {
@@ -33,21 +35,25 @@ const ProtectedRoute = ({ children }) => {
     });
   }, [auth]);
 
-  // If is loading, show spinner
+  // If it is loading, show spinner
   if (loading) {
     return (
-      <div
-        className={
-          "h-screen w-screen flex flex-col gap-5 justify-center items-center align-middle bg-gray-300-100"
-        }
-      >
-        <BallTriangle
-          height="150"
-          width="150"
-          color="orange"
-          ariaLabel="loading-indicator"
-        />
-        <code className={"text-xl text-gray-600 italic "}>Loading...</code>
+      <div className={theme === "dark" ? "dark" : "light"}>
+        <div
+          className={
+            "h-screen w-screen flex flex-col gap-5 justify-center items-center align-middle bg-main-bg dark:bg-main-dark-bg"
+          }
+        >
+          <BallTriangle
+            height="150"
+            width="150"
+            color="orange"
+            ariaLabel="loading-indicator"
+          />
+          <code className={"text-xl text-gray-600 dark:text-gray-200 italic "}>
+            Loading...
+          </code>
+        </div>
       </div>
     );
   }

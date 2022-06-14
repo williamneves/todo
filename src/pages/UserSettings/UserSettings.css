@@ -1,8 +1,8 @@
 @tailwind components;
 
 @layer components {
-  .userSettings {
-    @apply flex
+    .userSettings {
+        @apply flex
         justify-between
         mx-5
         mt-14
@@ -14,10 +14,10 @@
         rounded-lg
         p-5
         drop-shadow-md;
-  }
+    }
 
-  .profileContainer {
-    @apply rounded-full
+    .profileContainer {
+        @apply rounded-full
         h-40
         w-40
         flex
@@ -25,20 +25,26 @@
         cursor-pointer
         overflow-hidden
         drop-shadow-md;
-  }
+    }
 
-  .profilePhoto {
-    @apply group-hover:blur-sm
+    .profilePhoto {
+        @apply group-hover:blur-sm
         transition-all
         duration-300
         ease-out
         h-40
         w-40
         object-cover;
-  }
+    }
 
-  .overlapProfileIcon {
-    @apply absolute
+    .profileIcon {
+        @apply
+        h-20
+        w-20
+    }
+
+    .overlapProfileIcon {
+        @apply absolute
         top-0
         left-0
         h-40
@@ -56,5 +62,5 @@
         transition-all
         duration-300
         ease-out;
-  }
+    }
 }

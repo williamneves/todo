@@ -2,17 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components{
-  .modeSwitch{
-    @apply
-    flex
-    items-center
-    justify-center
-    gap-2
-    text-xl
+@layer components {
+  .modeSwitch {
+    @apply flex
+        items-center
+        justify-center
+        gap-2
+        /*text-3xl;*/;
   }
-  .darkIconActive{
-    @apply
-    text-orange-500
+
+  .darkIconActive {
+    @apply text-orange-500
+        w-6
+        h-6;
   }
 }

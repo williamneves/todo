@@ -1,9 +1,12 @@
 import React, { useEffect, useContext } from "react";
-import { RiMoonClearLine } from "react-icons/ri";
-import { ImSun } from "react-icons/im";
 import Toogle from "./Toogle";
 import "./ThemeSwitch.css";
 import { appContext } from "../../../lib/context";
+import { SunIcon, MoonIcon } from "@heroicons/react/solid";
+import {
+  SunIcon as SunOutline,
+  MoonIcon as MoonOutline,
+} from "@heroicons/react/outline";
 
 const ThemeSwitch = () => {
   const { theme, setTheme } = useContext(appContext);
@@ -22,13 +25,19 @@ const ThemeSwitch = () => {
 
   return (
     <div className="modeSwitch">
-      <ImSun
-        className={theme === "light" ? "darkIconActive" : "text-slate-500"}
-      />
+      {theme === "light" ? (
+        <SunIcon className={"darkIconActive"} />
+      ) : (
+        <SunOutline className={"text-slate-500 w-6 h-6"} />
+      )}
       <Toogle isDark={theme === "dark"} switchTheme={handleDarkModeToggle} />
-      <RiMoonClearLine
-        className={theme === "dark" ? "darkIconActive" : "text-slate-500"}
-      />
+      <span>
+        {theme === "dark" ? (
+          <MoonIcon className={"darkIconActive"} />
+        ) : (
+          <MoonOutline className={"text-slate-500 w-6 h-6"} />
+        )}
+      </span>
     </div>
   );
 };
