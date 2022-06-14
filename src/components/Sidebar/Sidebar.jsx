@@ -30,8 +30,6 @@ const Sidebar = () => {
 
     handleResize();
 
-    console.log(location.pathname);
-
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 

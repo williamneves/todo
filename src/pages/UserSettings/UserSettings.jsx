@@ -1,17 +1,11 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useContext, useRef } from "react";
 import "./UserSettings.css";
 import InputRounded from "./../../components/common/InputRounded/InputRounded";
 import {
   db,
   doc,
-  getDoc,
-  addDoc,
   updateDoc,
-  collection,
-  updateProfile,
-  auth,
   logout,
-  signOut,
   ref,
   getDownloadURL,
   uploadString,
@@ -35,7 +29,7 @@ const UserSettings = () => {
   //Create states
   const [onEdit, setOnEdit] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
-  const { userDB, setUserDB, authUser, setAuthUser } = useContext(appContext);
+  const { userDB, setUserDB, authUser } = useContext(appContext);
   const [tempUserDB, setTempUserDB] = useState(userDB);
   const [profileWasUpdated, setProfileWasUpdated] = useState(false);
 
@@ -52,12 +46,6 @@ const UserSettings = () => {
     if (tempUserDB[name] !== value) {
       setProfileWasUpdated(true);
     }
-  };
-
-  // Handle Submit User Edit Info
-  const handleEditUserInfo = (e) => {
-    e.preventDefault();
-    console.log("submit");
   };
 
   // Handle the Image Upload
@@ -81,7 +69,7 @@ const UserSettings = () => {
     reader.onload = async (readerEvent) => {
       const imageRef = ref(storage, `profileImages/${authUser.uid}`);
       await uploadString(imageRef, readerEvent.target.result, "data_url").then(
-        async (snapshot) => {
+        async () => {
           const downloadURL = await getDownloadURL(imageRef);
           await updateDoc(doc(db, "users", authUser.uid), {
             photoURL: downloadURL,
@@ -233,22 +221,17 @@ const UserSettings = () => {
         {/* Right */}
         <div className="flex">
           {/* UserInfo */}
-
           <form ref={formRef}>
             <div className="grid gap-6 mb-6 lg:grid-cols-2">
               <InputRounded
                 name="displayName"
                 type="text"
-                // extraClassLabel=''
-                // extraClassInput=''
                 labelText="Full Name"
                 placeholder={"Display Name"}
                 required=""
                 disabled=""
                 validate=""
                 readonly={!onEdit}
-                // styleLabel={{'display': 'none'}}
-                // styleInput={{'display': 'none'}}
                 handleFocus={() => console.log("focus")}
                 handleBlur={() => console.log("blur")}
                 handleChange={handleInputChanges}
@@ -257,8 +240,6 @@ const UserSettings = () => {
               <InputRounded
                 name="email"
                 type="email"
-                // extraClassLabel=''
-                // extraClassInput=''
                 styleInput={{ cursor: "no-drop" }}
                 labelText="Email"
                 placeholder={"Email"}
@@ -276,8 +257,6 @@ const UserSettings = () => {
                 disabled=""
                 validate=""
                 readonly={!onEdit}
-                // styleLabel={{'display': 'none'}}
-                // styleInput={{'display': 'none'}}
                 handleFocus={() => console.log("focus")}
                 handleBlur={() => console.log("blur")}
                 handleChange={handleInputChanges}
@@ -294,17 +273,11 @@ const UserSettings = () => {
                 disabled=""
                 validate=""
                 readonly={!onEdit}
-                // styleLabel={{'display': 'none'}}
-                // styleInput={{'display': 'none'}}
-                // handleFocus={() => console.log('focus')}
-                // handleBlur={() => console.log('blur')}
                 handleChange={handleInputChanges}
                 value={userDB?.lastName}
               />
             </div>
           </form>
-
-          {/* User Aditional info */}
 
           {/* Button to edit and Update */}
         </div>
