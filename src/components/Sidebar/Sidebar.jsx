@@ -40,10 +40,11 @@ const Sidebar = () => {
     } else setMenuState(true);
   }, [screenSize]);
 
-  // Close the menu if the user clicks outside of the menu
+  // Close the menu if the user clicks outside the menu
   useEffect(() => {
     // If the menu is open and screen is less than 768 width, close it if the user clicks outside of it
     const handleClick = (e) => {
+      // noinspection JSUnresolvedFunction
       if (
         menuState &&
         !sidebarRef.current.contains(e.target) &&
