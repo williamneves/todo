@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^13.2.1",
     "firebase": "^9.8.2",
     "flowbite": "^1.4.7",
+    "flowbite-datepicker": "^1.2.1",
     "flowbite-react": "^0.0.25",
     "moment-timezone": "^0.5.34",
     "react": "^18.1.0",
