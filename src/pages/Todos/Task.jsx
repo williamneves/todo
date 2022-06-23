@@ -1,8 +1,10 @@
 import { PlusIcon } from '@heroicons/react/solid';
 import { PencilAltIcon, CloudUploadIcon } from '@heroicons/react/outline';
 import React, { useState, useEffect, useRef } from 'react';
+import { updateDoc, doc, db } from '../../lib/firebase';
+import { toast } from 'react-hot-toast';
 
-const Task = ({ taskData }) => {
+const Task = ({ taskData, id }) => {
 	const [task, setTask] = useState(taskData);
 	const [tempTask, setTempTask] = useState(taskData);
 	const [editMode, setEditMode] = useState(false);
@@ -11,9 +13,21 @@ const Task = ({ taskData }) => {
 	const inputRef = useRef(null);
 
 	// Handle task check isDone
-	const handleCheck = () => {
-		console.log('Checking task...');
-		setTask({ ...task, isDone: !task.isDone });
+	const handleCheck = async () => {
+		const toastId = toast.loading("Updating...");
+		
+		// Update task in firebase
+		try {
+			// const taskRef = await doc( db, 'todos', task.id );
+			console.log(id)
+			await updateDoc(doc( db, 'todos', id ),{ isDone: !task.isDone });
+			setTask( { ...task, isDone: !task.isDone } );
+			toast.success("Task updated",{id:toastId});
+		}
+		catch ( error ) {
+			console.log( error );
+			toast.error("Error updating task",{id:toastId});
+		}
 	};
 
 	// Handle task delete
@@ -22,7 +36,7 @@ const Task = ({ taskData }) => {
 	};
 
 	// Handle task edit
-	const handleEdit = (e) => {
+	const handleEdit = async (e) => {
 		e.preventDefault();
 		// Focus on input ref
 		// inputRef.current.focus();
@@ -36,17 +50,31 @@ const Task = ({ taskData }) => {
 			return;
 		}
 
+		const toastId = toast.loading("Updating...");
+
 		// If is in edit mode, but not changed, set edit mode to false
 		if (task.task === tempTask.task && task.isDone === tempTask.isDone) {
-			setEditMode(false);
-			console.log('No changes...');
+			setEditMode( false );
+			toast("No changes",{id:toastId});
 			return;
 		}
 
 		console.log('updating task...');
-		setEditMode(false);
+		try {
+			// Update task in firebase
+			await updateDoc( doc( db, 'todos', id ), { task: task.task, isDone: task.isDone } );
+			setEditMode( false );
+			toast.success("Task updated",{id:toastId});
+		}
+		catch ( error ) {
+			console.log( error );
+			inputRef.current.focus();
+			toast.error("Error updating task",{id:toastId});
+		}
 	};
 
+
+	// Handle task edit buttons show/hide
 	useEffect(() => {
 		// if is on Edit mode and Task is done, show button to true
 		if (editMode) {
@@ -60,11 +88,6 @@ const Task = ({ taskData }) => {
 		}
 	}, [task.isDone, editMode]);
 
-	// handle Focus
-	const handleFocus = () => {
-		inputRef.current.focus();
-		console.log('Focusing...');
-	};
 
 	return (
 		<div
@@ -97,28 +120,8 @@ const Task = ({ taskData }) => {
 					disabled={!editMode}
 				/>
 
-				{/*  Date Picker */}
-				{/* <div className='absolute inset-y-0 right-[85px] flex items-center'>
-							<Dropdown
-								arrowIcon={false}
-								label={<CalendarIcon className='w-6 h-6 text-gray-400' />}
-								inline={true}
-								className='w-[320px] mx-auto'
-								>
-								<DayPicker
-									mode='single'
-									selected={selectDueDate}
-									onSelect={setSelectDueDate}
-									className='p-5 w-[315px]'
-								/>
-							</Dropdown>
-						</div> */}
-
-				{/* Button to add */}
-
 				{showBtn && (
 					<button
-						onClick={handleFocus}
 						type='submit'
 						className={`absolute inset-y-[18px] right-6  flex items-center justify-center transition-all-200 group outline outline-2 w-7 h-7 rounded-lg ${
 							!editMode

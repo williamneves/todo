@@ -29,9 +29,11 @@ const UserSettings = () => {
   //Create states
   const [onEdit, setOnEdit] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
-  const { userDB, setUserDB, authUser } = useContext(appContext);
   const [tempUserDB, setTempUserDB] = useState(userDB);
-  const [profileWasUpdated, setProfileWasUpdated] = useState(false);
+  const [ profileWasUpdated, setProfileWasUpdated ] = useState( false );
+  
+  // Context
+  const { userDB, setUserDB, authUser } = useContext(appContext);
 
   // Use ref to store the photoImage file reference
   const newProfileImage = useRef();

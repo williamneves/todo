@@ -8,17 +8,14 @@ const Todos = () => {
 	
 	return (
 		<div className='flex justify-center w-full pt-10'>
-      <div className='flex flex-col gap-3 items-center w-full mx-8 md:max-w-xl lg:max-w-2xl'>
-        
+			<div className='flex flex-col gap-3 items-center w-full mx-8 md:max-w-xl lg:max-w-2xl'>
 				{/*  New Task Component */}
-        <NewTask />
-        
-        <div className='flex flex-col gap-3 items-center w-full mx-8 md:max-w-xl lg:max-w-2xl'>
-          
-					{/* Tasks List */ }
-					<TodosList />
-          
-				</div>
+
+				<NewTask />
+
+				{/* Tasks List */}
+
+				<TodosList />
 			</div>
 		</div>
 	);
