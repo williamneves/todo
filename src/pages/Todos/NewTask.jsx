@@ -1,18 +1,12 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState,  useContext } from 'react';
 import { appContext } from '../../lib/context';
 import './Todos.css';
-import { format } from 'date-fns';
-import { DayPicker } from 'react-day-picker';
-import 'react-day-picker/dist/style.css';
-import { Dropdown } from 'flowbite-react';
-import { CalendarIcon } from '@heroicons/react/outline';
-import { db, doc, setDoc, addDoc, collection, getDoc, serverTimestamp } from '../../lib/firebase';
+import { db, addDoc, collection, serverTimestamp } from '../../lib/firebase';
 import toast from 'react-hot-toast';
 import { PlusIcon } from '@heroicons/react/solid';
 
 const NewTask = () => {
 	const { authUser } = useContext(appContext);
-	const [todos, setTodos] = useState([]);
 	const [isDone, setIsDone] = useState(false);
 	const [newTodo, setNewTodo] = useState('');
 	const [selectDueDate, setSelectDueDate] = useState('');

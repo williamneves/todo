@@ -26,14 +26,15 @@ import {
 
 // UserSettings component
 const UserSettings = () => {
+  // Context
+  const { userDB, setUserDB, authUser } = useContext( appContext );
+  
   //Create states
   const [onEdit, setOnEdit] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [tempUserDB, setTempUserDB] = useState(userDB);
   const [ profileWasUpdated, setProfileWasUpdated ] = useState( false );
   
-  // Context
-  const { userDB, setUserDB, authUser } = useContext(appContext);
 
   // Use ref to store the photoImage file reference
   const newProfileImage = useRef();

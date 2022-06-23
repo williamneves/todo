@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SiTodoist } from "react-icons/si";
+import { BadgeCheckIcon } from "@heroicons/react/solid";
 import { FiUserPlus } from "react-icons/fi";
 import InputFloater from "../../components/common/InputFloater/InputFloater";
 import { Link, useNavigate } from "react-router-dom";
@@ -168,7 +168,7 @@ const Register = () => {
         id: toastId,
       });
       setLoading(false);
-      navigate("/account");
+      navigate("/user");
     } catch (err) {
       // If there is an error, show the error message
       if (err.code === "auth/email-already-in-use") {
@@ -265,8 +265,8 @@ const Register = () => {
             <div className="flex flex-col w-full items-center p-5 gap-4 justify-center">
               <div>
                 <div className="brandHeader">
-                  <SiTodoist className="text-orange-600" />
-                  <span className="font-bold dark:text-stone-200">
+                <BadgeCheckIcon className="w-7 h-7 text-orange-500" />
+                  <span className="font-bold text-lg">
                     Todo-it!
                   </span>
                 </div>
@@ -373,7 +373,7 @@ const Register = () => {
                 <div className="flex gap-3 py-1 justify-between items-center mt-3">
                   <div
                     id="Google"
-                    className="btnLoginBrands"
+                    className="btnLoginBrands bg-slate-200"
                     onClick={
                       !loading
                         ? () =>
@@ -410,7 +410,7 @@ const Register = () => {
                   </div>
                   <div
                     id="Facebook"
-                    className="btnLoginBrands"
+                    className="btnLoginBrands bg-slate-200"
                     onClick={
                       !loading
                         ? () =>
