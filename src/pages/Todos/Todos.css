@@ -4,16 +4,17 @@
   .inputTaskField {
     @apply
     rounded-xl 
-    bg-white border-0 
-    dark:bg-secondary-dark-bg/75 
-    text-gray-900 focus:ring-2 
-    focus:ring-gray-300 
-    focus:border-gray-300 
     block
     h-full 
     w-full 
     pl-16 
     p-2 
+    
+    
+    border-0 
+    focus:ring-2 
+    focus:ring-gray-300 
+    focus:border-gray-300 
     dark:placeholder-gray-400 
     dark:text-white 
     dark:focus:ring-gray-500 
@@ -25,32 +26,29 @@
   }
   .checkCssIcon {
     @apply
-    h-6 
-    w-6
+    h-3 
+    w-3
     p-2
     rounded-full 
-    border-2 
-    border-gray-400/75 
-    dark:border-gray-200/75 
-    dark:hover:border-gray-200 
+    outline outline-2 outline-offset-2
+    outline-gray-400/75 
+    dark:outline-gray-200/75 
+    dark:hover:outline-gray-200 
     hover:scale-105 
     active:scale-95 
-    hover:border-gray-400 
+    hover:outline-gray-400 
     transition-all 
-    ease-out 
+    ease-in-out 
     duration-200
+    hover:bg-gray-400/75
   }
   .checkCssIcon.checked {
     @apply
     bg-green-500/75
-    border-green-500/75 
-    dark:border-green-400/75 
-    dark:hover:border-green-400 
-    hover:scale-105 
-    active:scale-95 
-    hover:border-green-400 
-    transition-all 
-    ease-out 
-    duration-200
+    outline-green-500/75 
+    dark:outline-green-400/75 
+    dark:hover:outline-green-400  
+    hover:outline-green-400 
+    hover:bg-green-400
   }
 }

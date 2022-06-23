@@ -12,7 +12,8 @@ body {
 
 @layer components {
   .mainApp {
-    @apply flex relative
+    @apply 
+    flex relative
         bg-main-bg
         dark:bg-main-dark-bg
         min-h-screen;
@@ -22,7 +23,10 @@ body {
     @apply dark:bg-main-dark-bg
         bg-main-bg
         min-h-screen
-        w-full;
+        w-full
+        /* flex
+        flex-col
+        gap-5 */
   }
 
   .btn-outline-red {
@@ -45,6 +49,12 @@ body {
         duration-300;
   }
 
+  .transition-all-200 {
+    @apply transition-all
+        ease-out
+        duration-200;
+  }
+  
   /*    InputRounded */
   .inputRounded-input {
     @apply transition-all ease-out duration-150;

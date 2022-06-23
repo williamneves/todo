@@ -7,24 +7,27 @@ const Home = () => {
   const { menuState } = useContext(appContext);
 
   return (
-    <>
-      {/* Nav */}
-      <Sidebar />
+		<>
+			{/* Nav */}
+			<Sidebar />
 
-      {/* Main */}
-      <div
-        className={`${menuState ? "ml-60" : "flex-2"} content hideTranstion`}
-      >
-        {/* Navbar */}
-        <div className="navbar">
-          <Navbar />
-        </div>
+			{/* Main */}
+			<div className={`${menuState ? 'ml-60' : 'ml-0'} content hideTranstion`}>
+				{/* Navbar */}
+        <div
+          className={`navbar ${menuState ? 'w-[calc(100%-15rem)]' : 'w-full'}`}
+          // add style width 100% to navbar
+        >
+					<Navbar />
+				</div>
 
-        {/* Routes */}
-        <Outlet />
-      </div>
-    </>
-  );
+				{/* Routes */}
+				<div className="mt-10">
+					<Outlet />
+				</div>
+			</div>
+		</>
+	);
 };
 
 export default Home;

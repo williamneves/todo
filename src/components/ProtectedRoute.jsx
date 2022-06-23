@@ -28,6 +28,7 @@ const ProtectedRoute = ({ children }) => {
       } else {
         // User is signed out
         // Set loading to false and users states to null
+        console.log("User is signed out");
         setLoading(false);
         setUserDB(null);
         setAuthUser(null);

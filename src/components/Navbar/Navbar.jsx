@@ -13,11 +13,11 @@ const Navbar = () => {
   };
 
   return (
-    <div className="flex items-center justify-between p-2 md:ml-5 md:mr-5 relative">
+    <div className="flex items-center justify-between p-2 relative px-5">
       <div>
         <MenuIcon
           className={
-            "w-8 h-8 dark:text-white text-slate-800 cursor-pointer hover:text-slate-200 transition-all duration-200 ease-in-out"
+            "w-8 h-8 dark:text-white text-slate-800 cursor-pointer hover:text-slate-500 transition-all duration-200 ease-in-out"
           }
           onClick={handleClick}
         />

@@ -2,11 +2,13 @@
 
 @layer components {
   .navbar {
-    @apply fixed
-        md:static
+    @apply 
+    fixed
+        /* md:static */
+        block
         bg-main-bg
         dark:bg-main-dark-bg
-        w-full
-        z-40;
+        z-40
+        h-[48px]
   }
 }

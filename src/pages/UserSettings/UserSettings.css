@@ -5,7 +5,6 @@
         @apply flex
         justify-between
         mx-5
-        mt-14
         md:mt-8
         bg-white
         dark:bg-secondary-dark-bg/50
