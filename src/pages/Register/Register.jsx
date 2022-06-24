@@ -108,7 +108,7 @@ const Register = () => {
     if (newUser.confirmPassword === "") {
       setValConfirmPassword("required");
       validate = false;
-      console.log("required");
+      // console.log("required");
     } else if (newUser.password !== newUser.confirmPassword) {
       setValConfirmPassword("Not match");
       validate = false;
@@ -189,7 +189,7 @@ const Register = () => {
 
   // Check if the user already exists in the database
   const userExists = async (uid) => {
-    console.log("check if user exists");
+    // console.log("check if user exists");
     const userRef = doc(db, "users", uid);
     const userDoc = await getDoc(userRef);
 
@@ -212,7 +212,7 @@ const Register = () => {
 
       // If user exists, sign the User
       if (userExistsResponse) {
-        console.log("user exists");
+        // console.log("user exists");
         // User already exists
         toast.success(`Welcome back ${providerUser.user.displayName}!`, {
           id: toastId,

@@ -59,7 +59,7 @@ const providerFacebook = new FacebookAuthProvider();
 const logout = () => {
   toast.success("Logout Successful");
   signOut(auth).then(() => {
-    console.log("Logout Successful");
+    // console.log("Logout Successful");
   });
 };
 

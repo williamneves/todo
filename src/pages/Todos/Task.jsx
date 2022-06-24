@@ -18,8 +18,6 @@ const Task = ({ taskData, id }) => {
 		
 		// Update task in firebase
 		try {
-			// const taskRef = await doc( db, 'todos', task.id );
-			console.log(id)
 			await updateDoc(doc( db, 'todos', id ),{ isDone: !task.isDone });
 			setTask( { ...task, isDone: !task.isDone } );
 			toast.success("Task updated",{id:toastId});
@@ -32,7 +30,7 @@ const Task = ({ taskData, id }) => {
 
 	// Handle task delete
 	const handleDelete = () => {
-		console.log('Deleting task...');
+		// console.log('Deleting task...');
 	};
 
 	// Handle task edit
@@ -59,7 +57,6 @@ const Task = ({ taskData, id }) => {
 			return;
 		}
 
-		console.log('updating task...');
 		try {
 			// Update task in firebase
 			await updateDoc( doc( db, 'todos', id ), { task: task.task, isDone: task.isDone } );

@@ -50,10 +50,6 @@ const TodosList = () => {
 	}, [ todos, filter, db ] );
 
 
-	useEffect(() => {
-		console.log(todos);
-	}, [todos]);
-
 	return (
 		<>
 			{/* <div className='w-[calc(100%-2rem)] border-b-2 border-gray-300 dark:border-gray-700 mb-2 mt-6'>
@@ -64,14 +60,14 @@ const TodosList = () => {
 
 			<div className="flex items-center justify-end w-[calc(100%-1rem)] border-0 border-b-2 border-gray-200 dark:border-gray-700 mb-2 mt-5">
 				<div>
-					<label for='underline_select' className='sr-only'>
+					<label htmlFor='underline_select' className='sr-only'>
 						Underline select
 					</label>
 					<select
 						id='underline_select'
 						onChange={(e) => setFilter(e.target.value)}
 						className='block py-2.5 px-0 w-[100px] text-sm text-gray-500 bg-transparent border-0 appearance-none dark:text-gray-400  focus:outline-none focus:ring-0 focus:border-gray-200 peer'>
-						<option selected='' value='all'>All</option>
+						<option defaultValue='all'>All</option>
 						<option value='checked'>Done</option>
 						<option value='unchecked'>Not done</option>
 					</select>
