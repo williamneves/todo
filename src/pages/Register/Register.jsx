@@ -27,7 +27,7 @@ const Register = () => {
     email: "",
     password: "",
     confirmPassword: "",
-    photoUrl: "",
+    photoURL: "",
   });
   // Validation States
   const [valFirstName, setValFirstName] = useState("");
@@ -146,11 +146,11 @@ const Register = () => {
       );
 
       // Get random avatar photo with initials
-      const photoUrl = `https://ui-avatars.com/api/?name=${newUser.firstName[0]}+${newUser.lastName[0]}&size=256&background=random`;
+      const photoURL = `https://ui-avatars.com/api/?name=${newUser.firstName[0]}+${newUser.lastName[0]}&size=256&background=random`;
 
       await updateProfile(createdUser.user, {
         displayName: `${newUser.firstName} ${newUser.lastName}`,
-        photoURL: photoUrl,
+        photoURL: photoURL,
       });
 
       await setDoc(doc(db, "users", createdUser.user.uid), {
@@ -159,7 +159,7 @@ const Register = () => {
         firstName: newUser.firstName,
         lastName: newUser.lastName,
         email: newUser.email,
-        photoUrl: photoUrl,
+        photoURL: photoURL,
         createdAt: serverTimestamp(),
       });
 
