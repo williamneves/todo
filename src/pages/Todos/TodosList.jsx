@@ -67,7 +67,7 @@ const TodosList = () => {
 						id='underline_select'
 						onChange={(e) => setFilter(e.target.value)}
 						className='block py-2.5 px-0 w-[100px] text-sm text-gray-500 bg-transparent border-0 appearance-none dark:text-gray-400  focus:outline-none focus:ring-0 focus:border-gray-200 peer'>
-						<option defaultValue='all'>All</option>
+						<option value='all'>All</option>
 						<option value='checked'>Done</option>
 						<option value='unchecked'>Not done</option>
 					</select>
