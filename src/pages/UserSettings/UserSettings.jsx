@@ -53,7 +53,7 @@ const UserSettings = () => {
 
   // Handle the Image Upload
   const handleImageChange = async (e) => {
-    console.log("handleImageChange");
+    // console.log("handleImageChange");
 
     const toastId = toast.loading("Checking file...");
 
@@ -79,7 +79,7 @@ const UserSettings = () => {
           });
           setSelectedFile(readerEvent.target.result);
           toast.success("Image uploaded successfully", { id: toastId });
-          console.log("image uploaded");
+          // console.log("image uploaded");
         }
       );
     };
@@ -235,8 +235,6 @@ const UserSettings = () => {
                 disabled=""
                 validate=""
                 readonly={!onEdit}
-                handleFocus={() => console.log("focus")}
-                handleBlur={() => console.log("blur")}
                 handleChange={handleInputChanges}
                 value={userDB?.displayName}
               />
@@ -260,8 +258,6 @@ const UserSettings = () => {
                 disabled=""
                 validate=""
                 readonly={!onEdit}
-                handleFocus={() => console.log("focus")}
-                handleBlur={() => console.log("blur")}
                 handleChange={handleInputChanges}
                 value={userDB?.firstName}
               />
